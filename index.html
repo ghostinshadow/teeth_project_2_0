@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app = 'myClinic'>
+	<head >
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<script src="js\vendor\jquery-2.1.3.js"></script>
+		<link href="css\bootstrap.css" rel="stylesheet" type="text/css" />
+		<link href="css\bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="css\bootstrap-combobox.css">
+		<link rel="stylesheet" type="text/css" href="css\style.css">
+		<script src="node_modules\angular\angular.min.js"></script>
+		<script src="node_modules\angular\angular-resource.js"></script>
+		<script src="node_modules\angular\angular-route.js"></script>
+		<script src="node_modules\angular\angular-animate.min.js"></script>
+		<script src="node_modules\angular\angular-touch.min.js"></script>
+		<script src="node_modules\angular\simplePagination.js"></script>
+		<script src="app.js"></script>
+		<script src="js\bootstrap-combobox.js"></script>
+		<script src="js\controllers\navController.js"></script>
+		<script src="js\controllers\mainController.js"></script>
+		<script src="js\controllers\formController.js"></script>
+	</head>
+	<body ng-controller = 'NavController'>
+		<header>
+			<ul>
+				<li><a ng-click='winUnmaximize()' title='Minimize' id='windowControlMinimize'></a></li><!--
+				--><li><a ng-click='winMaximize()' title='Maximize' id='windowControlMaximize'></a></li><!--
+				--><li><a  ng-click='winClose()' title='Close'    id='windowControlClose'   ></a></li>
+			</ul>
+		</header>
+		<div class="navbar navbar-top navbar-inverse">
+			<div class=" col-sm-offset-1 col-sm-10">
+				<div class="navbar-header">
+					<div class='col-sm-1'>
+						<button class="navbar-brand" ng-disabled="ifHome()"  ng-click = 'go("/main",true)'>
+							<span class ='glyphicon glyphicon-home'></span>
+						</button>
+					</div>
+					<form ng-show= 'selectedChar' class="navbar-form navbar-left col-sm-2 main_page" role="search">
+						<div class="form-group">
+							<input type="search" ng-model='search' class="form-control input-lg" placeholder="Пошук стосовно літери">
+						</div>
+					</form>
+				</div>
+				<div class="nav navbar-nav pull-right">
+					<div class="navbar-header navbar-right">
+						<button class="navbar-brand" ng-disabled="ifHome()" ng-click = 'go("/createForm", true)'>
+							<span class='glyphicon glyphicon-plus'></span>
+							<span class='glyphicon glyphicon-user'></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-view>
+		</div>
+	</body>
+</html>

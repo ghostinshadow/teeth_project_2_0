@@ -1,0 +1,126 @@
+.arrow {
+    cursor: pointer;
+    display: block;
+    height: 45px;
+    margin-top: -35px;
+    outline: medium none;
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    z-index: 5;
+}
+.arrow.prev {
+    left: 20px;
+    opacity: 0.2;
+    transition: all 0.2s linear 0s;
+}
+.arrow.next {
+    opacity: 0.2;
+    right: 20px;
+    transition: all 0.2s linear 0s;
+}
+.arrow.prev:hover{
+    opacity:1;
+}
+.arrow.next:hover{
+    opacity:1;
+}
+
+.nav_bottom {
+    bottom: -4px;
+    display: block;
+    height: 48px;
+    left: 0;
+    margin: 0 auto;
+    padding: 1em 0 0.8em;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 100%;
+    z-index: 5;
+}
+.nav_bottom li {
+    border: 5px solid #bda16d;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    height: 60px;
+    margin: 0 8px;
+    position: relative;
+    width: 100px;
+}
+.nav_bottom li.active {
+    border: 5px solid #f37a4b;
+}
+.nav_bottom li:hover, .nav_bottom li:focus {
+   bottom: 5px;
+}
+.container.slider_photo img {
+   height: 100%;
+   width: 100%;
+}
+ 
+.nav_bottom li img {
+   max-width: 100%;
+}
+.bordered{
+    border: 15px solid #aba4a4;
+    border-radius: 5px;
+}
+.slider_photo {
+    height: 58em;
+    position: relative;
+    width: 100em;
+
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.slide.ng-hide-add.ng-hide-add-active {
+    opacity:0;
+}
+.slide.ng-hide-remove {
+    -webkit-transition:1s linear all;
+    transition:1s linear all;
+
+    display:block!important;
+    opacity:0;
+}
+.slide, .slide.ng-hide-remove.ng-hide-remove-active {
+    opacity:1;
+}
+.btn-file, .btn-end {
+  position: relative;
+  overflow: hidden;
+  background-color: #bda16d;
+}
+.btn-file:hover, .btn-end:hover {
+  background-color: #aba46d;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  color: #aba4a4;;
+  cursor: text !important;
+}

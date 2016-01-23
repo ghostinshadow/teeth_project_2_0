@@ -1,0 +1,118 @@
+<h2 class='custom row col-sm-offset-2'ng-hide='patientToUpdate'>Новий пацієнт:</h2>
+<h2 class='custom row col-sm-offset-2' ng-show='patientToUpdate'>Редагування пацієнта:</h2>
+<form name='form' class="form-horizontal col-sm-offset-3 col-sm-6">
+	<fieldset>
+		<legend class='custom' ng-hide='patientToUpdate'>Форма для створення</legend>
+		<legend class='custom' ng-show='patientToUpdate'>Форма для редагування</legend>
+		<div class="form-group">
+			<label for="inputSurname" class="col-sm-3 control-label custom" ><h3>Призвіще</h3></label>
+			<div class="col-sm-6">
+				<input type="text" name='surname' class="form-control input-lg custom" id="inputSurname" ng-model='newClient.surname' ng-minlength = 3 ng-maxlength = 20 ng-pattern='/^[а-яА-ЯІіЄє]+$/' required>
+				<div ng-show='form.surname.$invalid && form.surname.$dirty '>
+					<div ng-show='form.surname.$error.minlength' class='custom'>Призвіще не може бути менше 3-ох символів</div>
+					<div ng-show='form.surname.$error.maxlength' class='custom'>Призвіще має бути менше 20-и символів</div>
+					<div ng-show='form.surname.$error.required' class='custom'>Слід ввести призвіще</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputName" class="col-sm-3 control-label custom" ><h3>Ім'я</h3></label>
+			<div class="col-sm-6">
+				<input type="text" name='name' class="form-control input-lg custom" id="inputName" ng-model='newClient.name' ng-minlength = 3 ng-maxlength = 20 ng-pattern='/^[а-яА-ЯІіЄє]+$/' required>
+				<div ng-show='form.name.$invalid && form.name.$dirty '>
+					<div ng-show='form.name.$error.minlength' class='custom'>Ім'я не може бути менше 3-ох символів</div>
+					<div ng-show='form.name.$error.maxlength' class='custom'>Ім'я має бути менше 20-и символів</div>
+					<div ng-show='form.name.$error.required' class='custom'>Слід ввести Ім'я</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputDoctor" class="col-sm-3 control-label custom"><h3>Лікар</h3></label>
+			<div class="col-sm-6">
+				<input type='text' name='doctor' class="form-control input-lg custom" ng-model='newClient.doctor' list=doctors ng-minlength = 7 ng-maxlength = 30 ng-pattern='/^[а-яА-ЯІіЄє]+\s[а-яА-ЯІіЄє]+$/' required>
+				<datalist id=doctors class="custom" >
+				<option>Ліда Василівна</option>
+				</datalist>
+				<div ng-show='form.doctor.$invalid && form.doctor.$dirty '>
+					<div ng-show='form.doctor.$error.minlength' class='custom'>Лікар не може бути менше 7-и символів</div>
+					<div ng-show='form.doctor.$error.maxlength' class='custom'>Лікар має бути менше 30-и символів</div>
+					<div ng-show='form.doctor.$error.required' class='custom'>Слід вказати лікара</div>
+				</div>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputMilkTeeth" class="col-sm-3 control-label custom"><h3>Наявність молочних зубів</h3></label>
+		<div class="col-sm-4">
+			<select class="form-control input-lg custom" ng-model='newClient.milkTeeth'required>
+				<option>Є</option>
+				<option>Відсутні</option>
+			</select>
+			<div ng-show='form.milkTeeth.$invalid && form.milkTeeth.$dirty '>
+				<div ng-show='form.milkTeeth.$error.required' class='custom'>Слід вказати наявність</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputDate" class="col-sm-3 control-label custom"><h3>Дата народження</h3></label>
+		<div class="col-sm-5">
+			<input type='date' class="form-control input-lg custom" ng-model='newClient.birthDay' required>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputTown" class="col-sm-3 control-label custom"><h3>Місто</h3></label>
+		<div class="col-sm-4">
+			<input type='text' name='town' class="form-control input-lg custom" list=towns ng-model='newClient.town' ng-minlength = 3 ng-maxlength = 20 ng-pattern='/^[а-яА-ЯІіЄє]+$/' required />
+			<datalist id=towns class="custom" >
+			<option>Борислав</option>
+			<option>Дрогобич</option>
+			<option>Стебник</option>
+			<option>Стрий</option>
+			<option>Львів</option>
+			<option>Трускавець</option>
+			<option>Східниця</option>
+			</datalist>
+			<div ng-show='form.town.$invalid && form.town.$dirty '>
+				<div ng-show='form.town.$error.minlength' class='custom'>Місто не може бути менше 3-ох символів</div>
+				<div ng-show='form.town.$error.maxlength' class='custom'>Місто має бути менше 20-и символів</div>
+				<div ng-show='form.town.$error.required' class='custom'>Слід вказати місто</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPhone1" class="col-sm-3 control-label custom"><h3>Номер телефону 1</h3></label>
+		<div class="col-sm-5">
+			<input type="tel" name='selfone' class="form-control input-lg custom" id="inputTelNum1" ng-model='newClient.telNumber1' ng-minlength = 10 ng-pattern='/^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/' >
+			<div ng-show='form.selfone.$invalid && form.selfone.$dirty '>
+				<div ng-show='form.selfone.$error.minlength' class='custom'>Номер телефону не може бути менше 10-и символів Формат: xxx-xxx-xx-xx</div>
+				<div ng-show='form.town.$error.required' class='custom'>Слід вказати мобільний телефон. </div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPhone2" class="col-sm-3 control-label custom"><h3>Номер телефону 2</h3></label>
+		<div class="col-sm-5">
+			<input type="tel" name='phone' class="form-control input-lg custom" id="inputTelNum2" ng-model='newClient.telNumber2' ng-minlength = 5 ng-maxlength = 15 ng-pattern='/^[0-9-]+$/'>
+			<div ng-show='form.phone.$invalid && form.phone.$dirty '>
+				<div ng-show='form.phone.$error.minlength' class='custom'>Номер телефону не може бути менше 5-и символів</div>
+				<div ng-show='form.town.$error.maxlength' class='custom'>Місто має бути менше 15-и символів</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-3 control-label custom"><h3>Email</h3></label>
+		<div class="col-sm-6">
+			<input type="email" name='email' class="form-control input-lg custom" id="inputEmail" ng-model='newClient.email' >
+			<div ng-show='form.email.$invalid && form.email.$dirty '>
+				<div ng-show='form.email.$error.required' class='custom'>Слід вказати email</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-6 col-sm-3">
+			<button type="submit" ng-disabled='form.$dirty && form.$invalid' class="btn btn-large btn-success" ng-click='submitForm(newClient)' ng-hide='patientToUpdate'>Створити запис</button>
+			<button type="submit" ng-disabled='form.$dirty && form.$invalid' class="btn btn-large btn-success" ng-click='updateForm(newClient)' ng-show='patientToUpdate'>Редагувати запис</button>
+		</div>
+	</div>
+</fieldset>
+</form>

@@ -1,0 +1,11 @@
+<link rel="stylesheet" type="text/css" href="css\pass_styles.css">
+<div class="wrapper col-sm-offset-4 col-sm-4">
+    <form ng-if='!message' class="form-signin">
+        <h1 class="form-signin-heading">Введіть пароль</h1>
+        <input type="password" ng-model='owner.password' class="form-control input-lg" name="password" placeholder="Пароль" required>
+        <button ng-click='getAccessToDb(owner.password)' class="btn btn-lg btn-default btn-block custom" type="submit">Підтвердити</button>
+    </form>
+    <div class='message' ng-if='message'>
+        <h1>{{message}}</h1>
+    </div>
+</div>

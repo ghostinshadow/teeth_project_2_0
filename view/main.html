@@ -1,0 +1,192 @@
+<ul class="nav nav-pills">
+	<li role='presentation' ng-repeat = 'char in alphabet' ng-class='{active: isSelected(char)}'  ng-click='findInDatabase(char, true)'><a>{{char}}</a></li>
+</ul>
+<div class="col-sm-2 long" ng-if='selectedChar'>
+	<h1 class='custom'>Результат пошуку<h1>
+	<h3 ng-show='isEmpty()' class='custom'>За заданим критерієм не знайдено жодного запису</h3>
+	<ul class='list-group'>
+		<li class="list-group-item custom" ng-repeat ='client in (clients | orderBy:"surname" | filter: search) track by $index' ng-class='{active: isSelectedPatient(client)}' ng-click='selectPatient(client)'><h3>{{client.surname}} {{client.name}}</h3></li>
+	</ul>
+</div>
+<div class="col-sm-10" ng-if='selectedPatient'>
+	<h1 class='custom'>Карта пацієнта</h1>
+	<div class="custom">
+		<table  class="table table-responsive" >
+			<tr class="active">
+				<th>Призвіще</th>
+				<th>Ім'я</th>
+				<th>Місто</th>
+				<th>Лікар</th>
+				<th>Телефон 1</th>
+				<th>Телефон 2</th>
+				<th>Email</th>
+				<th>Прийом</th>
+				<th>Редагувати</th>
+				<th>Видалити запис</th>
+			</tr>
+			<tr class="success">
+				<td>{{selectedPatient.surname}}</td>
+				<td>{{selectedPatient.name}}</td>
+				<td>{{selectedPatient.town}}</td>
+				<td>{{selectedPatient.doctor}}</td>
+				<td>{{selectedPatient.telNumber1}}</td>
+				<td>{{selectedPatient.telNumber2}}</td>
+				<td>{{selectedPatient.email}}</td>
+				<td>
+					<a ng-click = 'createAppointment(selectedPatient)'>
+						<span class ='glyphicon glyphicon-plus center_up'></span>
+					</a>
+				</td>
+				<td>
+					<a ng-click = 'initUpdate(selectedPatient)'>
+						<span class ='glyphicon glyphicon-pencil'></span>
+					</a>
+					<a ng-click = 'go("/photoGallery", false)'>
+						<span class ='glyphicon glyphicon-picture float-right'></span>
+					</a>
+				</td>
+				<td>
+					<a ng-click = 'deletePatient(selectedPatient)'>
+						<span class ='glyphicon glyphicon-trash center_up'></span>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div ng-if='workForm' class="col-sm-offset-1" >
+		<form name='form' class="form-horizontal col-sm-offset-1 col-sm-9">
+			<fieldset>
+				<legend class='custom' >Форма для створення прийому</legend>
+				<div class="form-group">
+					<label for="inputTypeOfWork" class="col-sm-3 control-label custom"><h4>Тип робіт</h4></label>
+					<div class="col-sm-6">
+						<select class="form-control input-lg custom" ng-model='workDone.workType'required>
+							<option>Терапія</option>
+							<option>Ортодонтія</option>
+						</select>
+						<div ng-show='form.workType.$invalid && form.workType.$dirty '>
+							<div ng-show='form.workType.$error.required' class='custom'>Слід вказати тип </div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-if='workDone.workType === "Терапія"'>
+					<label for="inputExactWork" class="col-sm-3 control-label custom"><h4>Вид робіт</h4></label>
+					<div class="col-sm-6">
+						<select class="form-control input-lg custom" ng-model='workDone.exactWork' ng-options="work for work in theraphy" required>
+						</select>
+						<div ng-show='form.workType.$invalid && form.workType.$dirty '>
+							<div ng-show='form.workType.$error.required' class='custom'>Слід вказати вид робіт</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-if='workDone.workType === "Ортодонтія"'>
+					<label for="inputExactWork" class="col-sm-3 control-label custom"><h4>Вид робіт</h4></label>
+					<div class="col-sm-6">
+						<select class="form-control input-lg custom" ng-model='workDone.exactWork' ng-options="work for work in ortodoncy" required>
+						</select>
+						<div ng-show='form.workType.$invalid && form.workType.$dirty '>
+							<div ng-show='form.workType.$error.required' class='custom'>Слід вказати вид робіт</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputTeeth" class="col-sm-3 control-label custom"><h4>Номер зуба</h4></label>
+					<div class="col-sm-5">
+						<select name='nums' class="form-control input-lg custom" ng-model='workDone.teeth_nums' ng-options="tooth for tooth in teeth" multiple required>
+						</select>
+						<div ng-show='form.nums.$invalid && form.nums.$dirty '>
+							<div ng-show='form.nums.$error.required' class='custom'>Слід вказати вид робіт</div>
+							<div ng-show="form.nums.$dirty" class='custom'>Для вибору кількох варіантів використати клавішу ctr + ліва клавіша мишки. Таким же чином можна відмінити вибір</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<h4 class = "custom custom3" role='presentation' ng-repeat='num in workDone.teeth_nums'>{{num}},</h4>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPrice" class="col-sm-3 control-label custom"><h4>Ціна</h4></label>
+					<div class="col-sm-5">
+						<input type="number" name='price' class="form-control input-lg custom" id="inputPrice" ng-model='workDone.price' ng-pattern='/^[0-9]+$/' required>
+						<div ng-show='form.price.$invalid && form.price.$dirty '>
+							<div ng-show='form.price.$error.required' class='custom'>Слід вказати ціну</div>
+						</div>
+					</div>
+				</div>
+				<button type="button" ng-click="triggerWorkForm()" class="btn btn-default"><h4>Відмінити створення</h4></button>
+				<button type="button" ng-click="addWork(workDone)" class="btn btn-default"><h4>Створити</h4></button>
+			</fieldset>
+		</form>
+	</div>
+	<div  ng-show='!(appointments.length === 0) && !workForm'>
+		<div class="col-sm-2 medium">
+			<h3 class='custom'>Прийоми пацієнта</h3>
+			<ul class='list-group '>
+				<li class="list-group-item customList custom" ng-repeat ='appoint in appointments | orderBy:"creationTime":true  | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage' ng-class='{activeAppoint: isSelectedAppointment(appoint)}' ng-click='selectAppointment(appoint)' ><h4>Прийом від {{appoint.creationTime.substring(8,10) + ' ' + localize_month[appoint.creationTime.substring(5,7)] + ' ' + appoint.creationTime.substring(0,4)}}
+					</h4>
+					<a ng-click = 'deleteAppoint(appoint,selectedPatient)'>
+						<span class ='glyphicon glyphicon-trash'></span>
+					</a>
+					<a ng-click = 'triggerWorkForm()'>
+						<span class ='glyphicon glyphicon-plus'></span>
+					</a>
+				</li>
+			</ul>
+			<ul class="pagination">
+				<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
+				<li ng-repeat="n in [] | range: pagination.numPages" ng-class="{active: n == pagination.page}">
+					<a href="" ng-click="pagination.toPageId(n)">{{n + 1}}</a>
+				</li>
+				<li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li>
+			</ul>
+		</div>
+		<div class='col-sm-4' ng-if='!(worksDone.length === 0) && selectedAppointment && toothInfo'>
+			<h3 class='custom'>Здійснені робити на прийомі</h3>
+			<div class='overflow'>
+				<table class="table table-responsive" >
+					<tr class="active">
+						<th>Тип</th>
+						<th>Виконана робота</th>
+						<th>Ціна</th>
+						<th>Вилучити запис</th>
+					</tr>
+					<tr ng-repeat="work in (worksDone | reverse ) track by $index" class="success">
+						<td>{{work.workType}}</td>
+						<td>{{work.exactWork}}</td>
+						<td>{{work.price}}</td>
+						<td>
+							<a ng-click = 'deleteWork(work)'>
+								<span class ='glyphicon glyphicon-trash'></span>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class='col-sm-4' ng-if='!toothInfo'>
+			<h3><b>Роботи щодо обраного зуба</b></h3>
+			<div ng-if='toothInfoList.length > 0' class='overflow'>
+				<h3  ng-repeat='work in toothInfoList track by $index' >{{work}}</h3>
+			</div>
+			<div ng-if='toothInfoList.length === 0'>
+				<h3 >Жодних записів</h3>
+			</div>
+		</div>
+		<div class=' col-sm-6 float-right'>
+			<ul class=' teeth'>
+				<img  ng-repeat ='num in up_teeth_num' ng-click='findWorkOnTooth(num)' ng-src="img/tech/teeth_img/{{num}}.png" ng-class='{healed: isBeenHealed(num), active: isSelectedTooth(num)}'/>
+			</ul>
+			<ul class=' teeth bottom '>
+				<img  ng-repeat ='num in bottom_teeth_num'  ng-click='findWorkOnTooth(num)' ng-src="img/tech/teeth_img/{{num}}.png" ng-class='{healed: isBeenHealed(num), active: isSelectedTooth(num)}'/>
+			</ul>
+		</div>
+		<div ng-if='selectedPatient.milkTeeth === "Є"' class='col-sm-6 float-right'>
+			<ul class='milk col-sm-offset-2'>
+				<img ng-class='{healed: isBeenHealed(num), active: isSelectedTooth(num)}'  ng-repeat ='num in up_milk_num'  ng-click='findWorkOnTooth(num)' ng-src="img/tech/teeth_img/{{num - 40}}.png"/>
+			</ul>
+			<ul class=' milk bottom col-sm-offset-2'>
+				<img ng-class='{healed: isBeenHealed(num), active: isSelectedTooth(num)}' ng-repeat ='num in bottom_milk_num'  ng-click='findWorkOnTooth(num)' ng-src="img/tech/teeth_img/{{num - 40}}.png"/>
+			</ul>
+		</div>
+	</div>
+	<h3 class="col-sm-3 custom" ng-if='appointments.length === 0'>Пацієнт ще не відвідав жодного прийому</h3>
+</div>

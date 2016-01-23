@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="css\photos.css">
+<div class='row'><h2 class='col-sm-offset-5 col-sm-5'>{{selectedPatient.surname}}  {{selectedPatient.name}} -  Фотографії</h2>
+</div>
+<div class='col-sm-2'>
+	<h2 class='exclus'>Додати світлини</h2>
+	<div class="input-group">
+		<span class="input-group-btn">
+			<span class="btn btn-default btn-file">
+				<span class ='glyphicon glyphicon-open-file'></span>
+				<input type="file" class="input-lg" onchange='angular.element(this).scope().filesChanged(this)' multiple>
+			</span>
+		</span>
+		<input type="text"  value="{{count}}" class="form-control" readonly>
+		<span class="input-group-btn">
+			<span class="btn btn-default btn-end">
+				<a ng-disabled='!files' ng-click = 'upload()'>
+					<span class ='glyphicon glyphicon-plus float-left exclus'><span class ='glyphicon glyphicon-picture float-left exclus'></span></span>
+					
+				</a>
+			</span>
+		</span>
+	</div>
+	<span class="help-block">
+		<h3 class='exclus'>Виберіть одну або декілька світлин)</h3>	
+	</span>
+</div>
+<div ng-if='photos.length === 0' class="col-sm-offset-3 col-sm-9">
+	<h2>Цей пацієнт не має світлин. Будь-ласка додайте для перегляду</h2>
+</div>
+<div ng-if='photos' ng-class='{bordered: photos.length>0}' class="container slider_photo col-sm-9">
+	
+	<!-- enumerate all photos -->
+	<img ng-repeat="photo in photos" class="slide" ng-show="isActive($index)" ng-src="{{selectedPatient.folderName}}/{{photo}}" />
+	
+	<!-- prev / next controls -->
+	<a  class="arrow prev"  ng-click="showPrev()">
+		<img src='img/tech/prev.png' class="arrow prev"/>
+	</a>
+	<a  class="arrow next"  ng-click="showNext()">
+		<img src='img/tech/next.png' class="arrow next"/>
+	</a>
+	
+	<!-- extra navigation controls -->
+	<ul class="nav_bottom">
+		<li ng-repeat="photo in photos" ng-class="{'active':isActive($index)}">
+			<img src="{{selectedPatient.folderName}}/{{photo}}"  ng-click="showPhoto($index);" />
+		</li>
+	</ul>
+</div>
