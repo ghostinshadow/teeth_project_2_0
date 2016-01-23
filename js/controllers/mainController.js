@@ -9,6 +9,14 @@ var options = {
     algorithm: 'aes256'
 };
 
+var util = require('util');
+var log_file = fs.createWriteStream('log/debug.log', {flags : 'a'});
+
+console.log = function(d) { 
+  var date =  new Date()
+  log_file.write('=================' + '\n' + date + '\n' + util.format(d) + '\n' + '=================');
+};
+
 win.on('maximize', function() {
     win.isMaximized = true;
 });
